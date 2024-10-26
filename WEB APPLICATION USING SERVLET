@@ -1,0 +1,74 @@
+personalInfo.html
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Personal Info</title>
+</head>
+<body>
+<h2>Personal Info</h2>
+<form action="processForm" method="post">
+<label for="name">Name:</label>
+<input type="text" id="name" name="name" placeholder="Enter Your First Name" required><br><br>
+<label>Gender:</label>
+<input type="radio" id="male" name="gender" value="Male" required>
+<label for="male">Male</label>
+<input type="radio" id="female" name="gender" value="Female">
+<label for="female">Female</label><br><br>
+<label for="email">Email:</label>
+<input type="email" id="email" name="email" placeholder="Enter Your Email" required><br><br>
+<label for="dob">Date of Birth:</label>
+<input type="date" name="dob" required/>
+<label for="course">Course:</label>
+<select id="course" name="course">
+<option value="B.Tech">B.Tech</option>
+<option value="M.Tech">M.Tech</option>
+</select>
+<select id="branch" name="branch">
+<option value="CSE">CSE</option>
+<option value="ECE">ECE</option>
+</select><br><br>
+<label for="phone">Phone Number:</label>
+<input type="tel" id="phone" name="phone" placeholder="+91" required><br><br>
+<label>Technical Skills:</label><br>
+<input type="checkbox" id="c" name="tech" value="C">
+<label for="c">C</label><br>
+<input type="checkbox" id="cpp" name="tech" value="C++">
+<label for="cpp">C++</label><br>
+<input type="checkbox" id="java" name="tech" value="Java">
+<label for="java">Java</label><br>
+<input type="checkbox" id="oracle" name="tech" value="Oracle">
+<label for="oracle">Oracle</label><br>
+<input type="checkbox" id="html" name="tech" value="HTML">
+<label for="html">HTML</label><br>
+<input type="checkbox" id="others" name="tech" value="Others">
+<label for="others">Others</label><br><br>
+<input type="submit" value="Submit">
+<input type="reset" value="Reset">
+</form>
+</body>
+</html>
+
+
+//servlet
+
+package servlet; 
+import jakarta.servlet.*
+import java.io.PrintWriter; @WebServlet("/processForm")
+public class ProcessFormServlet extends HttpServlet { private static final long serialVersionUID = 1L;
+protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+response.setContentType("text/html"); PrintWriter out = response.getWriter();
+String name = request.getParameter("name"); String gender = request.getParameter("gender"); String email = request.getParameter("email"); String dob = request.getParameter("dob"); String course = request.getParameter("course"); String branch = request.getParameter("branch"); String phone = request.getParameter("phone");
+String[] technicalSkills = request.getParameterValues("tech"); out.println("<html><body>");
+out.println("<h2>Form Data Received:</h2>"); out.println("<p><strong>Name:</strong> " + name + "</p>"); out.println("<p><strong>Gender:</strong> " + gender + "</p>"); out.println("<p><strong>Email:</strong> " + email + "</p>"); out.println("<p><strong>Date of Birth:</strong> " + dob + "</p>"); out.println("<p><strong>Course:</strong> " + course + " (" + branch + ")</p>"); out.println("<p><strong>Phone:</strong> " + phone + "</p>"); out.println("<p><strong>Technical Skills:</strong></p>");
+if (technicalSkills != null) {
+for (String skill : technicalSkills) { out.println("<p>" + skill + "</p>");
+}
+} else {
+out.println("<p>No skills selected</p>");
+}
+out.println("</body></html>");
+}
+}
